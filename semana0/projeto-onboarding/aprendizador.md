@@ -1,0 +1,2 @@
+# Os aprendizados da Semana
+Meu querido diário, foi uma semana bem **conturbada** eu diria, muitas dúvidas e anseios... Eu aprendi Terminal, Git entre outras reflexões, ligões e muitos comandos. Foi **legal** e bem desafiador.
