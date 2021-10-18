@@ -14,13 +14,20 @@ function retornaArrayInvertido(array) {
 }
 
 // EXERCÍCIO 03
+
+
 function retornaArrayOrdenado(array) {
-    
+    function ordernar(a, b) {
+        return a - b
+    }
+    return array.sort(ordernar)
 }
 
 // EXERCÍCIO 04
 function retornaNumerosPares(array) {
-  
+    if (array.filter % 2) {
+        return
+    }
 }
 
 // EXERCÍCIO 05
