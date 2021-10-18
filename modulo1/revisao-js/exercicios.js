@@ -3,41 +3,37 @@
 //    -> NÃO MODIFIQUE OS PARÂMETROS DAS FUNÇÕES!!! ()
 
 
-// EXERCÍCIO 01
+// EXERCÍCIO 01 - ok
 function retornaTamanhoArray(array) {
    return array.length
 }
 
-// EXERCÍCIO 02
+// EXERCÍCIO 02 - ok
 function retornaArrayInvertido(array) {
     return array.slice(0).reverse()
 }
 
-// EXERCÍCIO 03
-
-
+// EXERCÍCIO 03 - ok
 function retornaArrayOrdenado(array) {
-    function ordernar(a, b) {
+    function arrayOrdenada(a, b) {
         return a - b
     }
-    return array.sort(ordernar)
+    return array.sort(arrayOrdenada)
 }
 
-// EXERCÍCIO 04
+// EXERCÍCIO 04 - ok
 function retornaNumerosPares(array) {
-    if (array.filter % 2) {
-        return
-    }
+ return array.filter((numerosPares) => numerosPares % 2 === 0)
 }
-
+const numerosParesSalvo
 // EXERCÍCIO 05
 function retornaNumerosParesElevadosADois(array) {
- 
+
 }
 
 // EXERCÍCIO 06
 function retornaMaiorNumero(array) {
-  
+
 }
 
 // EXERCÍCIO 07
