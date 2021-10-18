@@ -33,7 +33,11 @@ function retornaNumerosParesElevadosADois(array) {
 
 // EXERCÍCIO 06
 function retornaMaiorNumero(array) {
-
+    let numeroMaior = array[0]
+    for (let i = 1; i < array.length; i++) {
+        if(array[i] > numeroMaior) { numeroMaior = array[i] } 
+    }
+    return numeroMaior
 }
 
 // EXERCÍCIO 07
@@ -58,6 +62,7 @@ function retornaSegundoMaiorESegundoMenor(array) {
 
 // EXERCÍCIO 11
 function retornaChamadaDeFilme(filme) {
+
    
 }
 
