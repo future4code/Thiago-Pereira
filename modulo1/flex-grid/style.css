@@ -1,0 +1,88 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    height: 30px;
+    background-color: mediumvioletred;
+    padding: 15px 30px;
+    align-items: center;
+    width: 100vw;
+}
+
+header > ul {
+    display: flex;
+    align-items: center;
+    width: 75vw;
+}
+
+header > ul> li {
+    margin-left: 20px;
+
+}
+
+header > button {
+    height: 25px;
+    padding: 0px 10px;
+    margin-right: 50px;
+}
+
+#corpo-do-site{
+    display: flex;
+}
+
+#menu{
+    background-color: #f2d0e0;
+    width: 300px;
+    height: 100vh;
+
+}
+
+#menu > ul {
+    display: flex;
+    margin-left: 20px;
+
+}
+
+#menu > ul{
+    justify-content:space-between;
+}
+
+#menu > ul > li{
+    padding: 10px;
+}
+
+#menu-texto {
+    justify-content: left;
+}
+
+#bolos {
+    justify-content:start;
+    display: flex;
+    flex-wrap: wrap;
+    height: 30vh;
+            /* nota: EU não estou conseguindo achar a "margem" do card para eu definir a box-shadow não sei pq */
+    box-shadow: 2px black;
+
+
+}
+
+#bolos > div{
+    text-align: center;   
+    width: 350px;
+    padding: 20px 10px;
+    margin: 1px solid black;
+        /* nota: EU não estou conseguindo achar a "margem" do card para eu definir a box-shadow não sei pq */
+    box-shadow: 2px black;
+}
+
+footer {
+    padding: 20px;
+    text-align: center;
+    background-color:  mediumvioletred;
+    width: 101vw;
+}
