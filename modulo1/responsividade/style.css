@@ -1,0 +1,145 @@
+*{
+Padding: 0;
+Margin: 0;
+text-decoration: none;
+}
+
+body{
+    display: grid;
+    background-color: black;
+    padding:2px;
+    width: 100vw;
+   
+}
+
+a{
+    color:rgb(160, 75, 75);
+    font-weight:bold;
+}
+
+
+video{
+    max-width: 90%;
+    display: block;
+    padding: 10px;
+
+}
+
+.video-item{
+    display:grid;
+    width: 100%;
+    border:1px solid white;
+    justify-items: center;
+    background-color:rgb(36, 34, 34);
+    padding: 0 0 10px 0
+}
+
+.video-item-media{
+    display:grid;
+    width: 80%;
+    border:1px solid white;
+    justify-items: center;
+    background-color:rgb(36, 34, 34);
+    padding: 0 0 10px 0
+}
+
+
+
+
+.site-header > div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: rgb(122, 25, 25);
+    color:crimson
+}
+
+.site-header-input{
+    margin-right: 70px;
+    width: 200px;
+    padding: 10px;
+    color:silver;
+    background-color:rgb(36, 34, 34);
+}
+
+#site-header-a{
+    color: rgb(128, 125, 125);
+    font-family:Colonna MT;
+}
+
+.container-site{
+    display: grid;
+    background-color: rgb(15, 15, 15);
+    text-align: center;
+    color:silver;
+    padding: 5px 0
+}
+
+
+
+#site-grid{
+    display: grid;
+    grid-template-rows: 80px 1fr 80px
+}
+
+.site-main{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap:10px;
+}
+
+.site-main-media{
+    display:grid;
+    color:white;
+    gap: 20px;
+    padding: 10px;
+    align-items:initial;
+    grid-template-columns: 1.5fr 0.5fr;
+}
+
+.site-main-mediatext{
+    text-align: start;
+}
+
+.site-main-video {
+    display: grid;
+    padding: 5px;
+    text-align: center;
+}
+
+
+.site-footer{
+    color:silver;
+    font-size: 20px;
+    /* font-family:Colonna MT; */
+    text-align: center;
+    background-color: rgb(122, 25, 25);
+    padding: 20px;
+}
+
+@media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .container-site{
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+    }
+
+
+/* #site-grid header div h1 {
+    font-size: 2rem;
+} */
+
+    .site-main{
+        display: grid;
+        flex-direction: row;
+
+    }
+
+    .video-item{
+        display:grid;
+        justify-items: center;
+        background-color:rgb(36, 34, 34);
+        padding: 0 0 0 0
+    }
+
+}
