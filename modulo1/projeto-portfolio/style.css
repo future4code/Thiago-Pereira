@@ -1,0 +1,109 @@
+/* body{
+
+} */
+
+body > div {
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 450px;
+    margin:auto;
+}
+
+header{
+    margin: auto;
+    text-align: center;
+    background-color: brown;
+    position:sticky;
+    margin: 2px solid yellow;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    font-style:oblique;
+    color:white
+}
+
+footer{
+    margin: auto;
+    text-align: center;
+    background-color: brown;
+    position:bottom;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    font-style:oblique
+}
+                    /* Parte Básica, Obrigatória e Chata de auto-descrição */
+.site-basic-header{
+    margin: auto;
+    text-align: center;
+    background-color: silver;
+    position:sticky;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    font-style:oblique;
+    color:white
+}
+
+.site-basic-body{
+    background-color: gray;
+}
+
+.site-basic-footer{
+    margin: auto;
+    text-align: center;
+    background-color: silver;
+    position:sticky;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    font-style:oblique;
+    color:white
+}
+
+                    /* Parte Paths of the Fate */
+.site-potf {
+    background-image: url("img/BackgroundGeral.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+
+                    /* Parte Argus NOVA */
+.site-argus{
+    background-image: url("img/BackgroundArgusNOVA.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+
+
+
+
+#area-site{
+    background-color: rgb(94, 23, 23);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    color: rgb(179, 171, 171);
+}
+
+#area-botoes{
+    text-align: center;
+}
+
+
+/* .botao-amarelo {
+    background-color: #ffaf43;
+    width: 250px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 20px;
+    color: white;
+}
+
+.botao-amarelo:hover {
+    background-color: #c44f00;
+}
+
+.botao-amarelo:active {
+    background-color: #361702;
+    color: white
+} */
