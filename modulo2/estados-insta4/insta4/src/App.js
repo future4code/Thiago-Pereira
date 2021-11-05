@@ -10,9 +10,22 @@ const MainContainer = styled.div`
 `
 
 class App extends React.Component {
+  state = {
+    inputNome: "",
+    inputFoto: "",
+    inputPost: "",
+    postados: [
+      {id: 1, postadorNome: 'paulinha', postadorFoto: 'https://picsum.photos/50/50', postadorPost: 'https://picsum.photos/200/150'},
+      {id: 1, postadorNome: 'Tyrande Whisperwind', postadorFoto: 'https://barradois.com/wp-content/uploads/2019/06/nordrassil.jpg', postadorPost: 'https://barradois.com/wp-content/uploads/2019/06/nordrassil.jpg'},
+      {id: 1, postadorNome: 'Kaelthas Sunstriker', postadorFoto: 'https://lendasdeazeroth.com.br/wp-content/uploads/2013/11/106378-world-of-warcraft-mists-of-pandaria-kaelthas-sunstrider.jpg', postadorPost: 'https://lendasdeazeroth.com.br/wp-content/uploads/2013/11/106378-world-of-warcraft-mists-of-pandaria-kaelthas-sunstrider.jpg'}
+    ]
+  }
+  
+
   render() {
-    return (
-      <MainContainer>
+    const postsPostados = this.state.postados.map((posts) => {
+      return (
+        <MainContainer>
         <Post
           nomeUsuario={'paulinha'}
           fotoUsuario={'https://picsum.photos/50/50'}
@@ -30,7 +43,9 @@ class App extends React.Component {
         />
 
       </MainContainer>
-    );
+      )
+    })
+
   }
 }
 
