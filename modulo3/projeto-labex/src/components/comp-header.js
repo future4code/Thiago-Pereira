@@ -27,14 +27,16 @@ const StyledHeader = styled.div`
 `
 
 
-export default function CompHeader() {
+export default function CompHeader(props) {
     return(
         <StyledHeader>
             <p></p>
             <div>
             <h2>LABE </h2><h1> X</h1>
             </div>
-            <CompLog />
+            <CompLog 
+                logado={props.logado}
+            />
         </StyledHeader>
     )
 }

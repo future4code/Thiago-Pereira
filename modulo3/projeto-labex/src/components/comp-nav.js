@@ -22,7 +22,7 @@ export default function CompNav(props) {
     const [pageViagens, set_pageViagens] = useState('list')
     const [pageCandidatar, set_pageCandidatar] = useState('list')
     const [pageSobre, set_pageSobre] = useState('list')
-    const [pageContato, set_pageContato] = useState('list')
+    const [pageAnalises, set_pageAnalises] = useState('list')
 
     const goToNavHome = () => {
         props.goToPageHome()
@@ -30,7 +30,7 @@ export default function CompNav(props) {
         set_pageViagens('list')
         set_pageCandidatar('list')
         set_pageSobre('list')
-        set_pageContato('list')
+        set_pageAnalises('list')
     }
 
     const goToNavViagens = () => {
@@ -39,7 +39,7 @@ export default function CompNav(props) {
         set_pageViagens('list active')
         set_pageCandidatar('list')
         set_pageSobre('list')
-        set_pageContato('list')
+        set_pageAnalises('list')
     }
 
     const goToNavCandidatar = () => {
@@ -48,7 +48,7 @@ export default function CompNav(props) {
         set_pageViagens('list')
         set_pageCandidatar('list active')
         set_pageSobre('list')
-        set_pageContato('list')
+        set_pageAnalises('list')
     }
 
     const goToNavSobre = () => {
@@ -57,16 +57,16 @@ export default function CompNav(props) {
         set_pageViagens('list')
         set_pageCandidatar('list')
         set_pageSobre('list active')
-        set_pageContato('list')
+        set_pageAnalises('list')
     }
 
-    const goToNavContato = () => {
-        props.goToPageContato()
+    const goToNavAnalises = () => {
+        props.goToPageAnalises()
         set_pageHome('list')
         set_pageViagens('list')
         set_pageCandidatar('list')
         set_pageSobre('list')
-        set_pageContato('list active')
+        set_pageAnalises('list active')
     }
 
 
@@ -104,10 +104,10 @@ export default function CompNav(props) {
                     </a>
                 </li>
 
-                <li className={`${pageContato}`}>
-                    <a onClick={() => goToNavContato()}> 
+                <li className={`${pageAnalises}`}>
+                    <a onClick={() => goToNavAnalises()}> 
                         <span className="icon"><ion-icon name="chatbox-ellipses-outline"></ion-icon></span>
-                        <span className="text">CONTATO</span>
+                        <span className="text">ANALISES</span>
                     </a>
                 </li>
 

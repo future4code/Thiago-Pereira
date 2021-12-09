@@ -6,28 +6,27 @@ import PageHome from "../pages/comp-page-home";
 import PageViagens from "../pages/comp-page-viagens";
 import PageCandidatar from "../pages/comp-page-candidatar";
 import PageSobre from "../pages/comp-page-sobre";
-import PageContato from "../pages/comp-page-contato";
+import PageAnalises from "../pages/comp-page-analises";
+
+import { routerPage } from "../router";
+import { useHistory } from "react-router";
 
 
-
-
-const StyledContent = styled.div`
-/* background-color: purple; */
-background-image: url('https://s1.1zoom.me/b4647/584/Cosmonauts_Surface_of_planets_525931_1920x1080.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-width: 100%;
-`
 
 export default function CompContent() {
-    const [actualScreen, set_actualScreen] = useState('home')
+    const history = useHistory();
+    
+    const [actualScreen, set_actualScreen] = useState('home') // nada de importante
 
     const goToPageHome = () => {
-        set_actualScreen('home')
+        // set_actualScreen('home')
+        history.push("/home")
     }
 
     const goToPageViagens = () => {
-        set_actualScreen('viagens')
+
+        // set_actualScreen('viagens')
+        history.push('/trips/list')
     }
 
     const goToPageCandidatar = () => {
@@ -38,28 +37,34 @@ export default function CompContent() {
         set_actualScreen('sobre')
     }
 
-    const goToPageContato = () => {
-        set_actualScreen('contato')
+    const goToPageAnalises = () => {
+        set_actualScreen('analises')
     }
 
+    const StyledContent = styled.div`
+    /* background-color: purple; */
+    background-image: url('https://s1.1zoom.me/b4647/584/Cosmonauts_Surface_of_planets_525931_1920x1080.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+    width: 100%;
+    `
 
-
-    const chooseScreen = () => {
-        switch (actualScreen) {
-            case 'home':
-                return <PageHome />
-            case 'viagens':
-                return <PageViagens />
-            case 'candidatar':
-                return <PageCandidatar />
-            case 'sobre':
-                return <PageSobre />
-            case 'contato':
-                return <PageContato />
-            default:
-                return <div>VISH</div>
-        }
-    }
+    // const chooseScreen = () => {
+    //     switch (actualScreen) {
+    //         case 'home':
+    //             return <PageHome />
+    //         case 'viagens':
+    //             return <PageViagens />
+    //         case 'candidatar':
+    //             return <PageCandidatar />
+    //         case 'sobre':
+    //             return <PageSobre />
+    //         case 'analises':
+    //             return <PageAnalises />
+    //         default:
+    //             return <div>VISH</div>
+    //     }
+    // }
 
 
     return(
@@ -69,9 +74,10 @@ export default function CompContent() {
                 goToPageViagens={goToPageViagens}
                 goToPageCandidatar={goToPageCandidatar}
                 goToPageSobre={goToPageSobre}
-                goToPageContato={goToPageContato}
+                goToPageAnalises={goToPageAnalises}
             />
-            {chooseScreen()}
+
+            <routerPage />
         </StyledContent>
     )
 }

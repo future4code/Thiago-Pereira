@@ -5,10 +5,16 @@ const StyledLog = styled.div`
     width: 15%;
 `
 
-export default function CompLog() {
+export default function CompLog(props) {
     return(
         <StyledLog>
-            LOG
+            {
+            props.logado
+            ?
+            <p> opa </p>
+            :
+            <p> vish </p>
+            }
         </StyledLog>
     )
 }
