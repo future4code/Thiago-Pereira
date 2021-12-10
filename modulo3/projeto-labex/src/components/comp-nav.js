@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import '../styles/style-color.css'
 import { StyledNavBar } from "../styles/style-navbar";
+import { useHistory } from "react-router-dom";
 
 const StyledMenu = styled.div`
 display: flex;
@@ -16,6 +17,7 @@ padding-bottom: 25px;
 `
 
 export default function CompNav(props) {
+    const history = useHistory();
     const [actualPage, set_actualPage] = useState('')
     
     const [pageHome, set_pageHome] = useState('list active')
@@ -25,7 +27,8 @@ export default function CompNav(props) {
     const [pageAnalises, set_pageAnalises] = useState('list')
 
     const goToNavHome = () => {
-        props.goToPageHome()
+        history.push("/")
+        // props.goToPageHome()
         set_pageHome('list active')
         set_pageViagens('list')
         set_pageCandidatar('list')
@@ -34,7 +37,8 @@ export default function CompNav(props) {
     }
 
     const goToNavViagens = () => {
-        props.goToPageViagens()
+        history.push('/trips/list')
+        // props.goToPageViagens()
         set_pageHome('list')
         set_pageViagens('list active')
         set_pageCandidatar('list')
@@ -43,7 +47,8 @@ export default function CompNav(props) {
     }
 
     const goToNavCandidatar = () => {
-        props.goToPageCandidatar()
+        history.push('/trips/application')
+        // props.goToPageCandidatar()
         set_pageHome('list')
         set_pageViagens('list')
         set_pageCandidatar('list active')
@@ -52,7 +57,8 @@ export default function CompNav(props) {
     }
 
     const goToNavSobre = () => {
-        props.goToPageSobre()
+        history.push('/wiki')
+        // props.goToPageSobre()
         set_pageHome('list')
         set_pageViagens('list')
         set_pageCandidatar('list')
@@ -61,7 +67,16 @@ export default function CompNav(props) {
     }
 
     const goToNavAnalises = () => {
-        props.goToPageAnalises()
+        history.push('/admin/trips/list')
+        // props.goToPageAnalises()
+        set_pageHome('list')
+        set_pageViagens('list')
+        set_pageCandidatar('list')
+        set_pageSobre('list')
+        set_pageAnalises('list active')
+    }
+
+    const setToNavAnalises = () => {
         set_pageHome('list')
         set_pageViagens('list')
         set_pageCandidatar('list')

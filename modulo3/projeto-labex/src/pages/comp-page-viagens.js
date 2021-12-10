@@ -1,20 +1,25 @@
 import styled from "styled-components"
-import { StyledBasePage } from "../styles/style-pages"
+import axios from "axios"
+
+import { StyledBasePage, StyledBaseViagens } from "../styles/style-pages"
+import '../styles/style-color.css'
+
+import { useState } from "react"
 
 
-export default function PageViagens() {
 
-    // const renderedViagens = props.listaViagens.map((item) => {
-    //     return(
-    //         <div>
+export default function PageViagens(props) {
 
-    //         </div>
-    //     )
-    // })
+
+    const picklist = () => {
+        console.log("console da page", props.listaViagens)
+    }
 
     return (
-        <StyledBasePage>
-            "Lista de VIAGENS"
-        </StyledBasePage>
+        <StyledBaseViagens>
+            {/* "Lista de VIAGENS" */}
+            {props.renderedViagens}
+            {/* <button onClick={picklist}>AQUI</button> */}
+        </StyledBaseViagens>
     )
 }

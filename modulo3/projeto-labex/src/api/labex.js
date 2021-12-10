@@ -1,14 +1,13 @@
 import axios from "axios";
 
-export default function apiLabex() {
-        const myName = "thiago-daurizio-carver"
+import { useState } from "react"
+
+// export default function ApiLabex() {
 
             
 
 
-    return(
-        <div>
-            ...
-        </div>
-    )
-}
+//     return(
+//         {getTrips}
+//     )
+// }

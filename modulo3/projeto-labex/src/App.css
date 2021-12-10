@@ -5,6 +5,11 @@
 }
 
 body{
-  height: 100vh;
+  min-height: 100vh;
+
+  background-image: url('https://s1.1zoom.me/b4647/584/Cosmonauts_Surface_of_planets_525931_1920x1080.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
 }
 
