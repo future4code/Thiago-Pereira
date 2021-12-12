@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 
-import '../styles/style-color.css'
+import '../styles/style-color.css';
 import { StyledNavBar } from "../styles/style-navbar";
 import { useHistory } from "react-router-dom";
 
@@ -67,7 +67,14 @@ export default function CompNav(props) {
     }
 
     const goToNavAnalises = () => {
-        history.push('/admin/trips/list')
+        const token = localStorage.getItem("token")
+        if(token === null){
+            history.push('/admin/trips/error')
+        } else{
+            history.push('/admin/trips/list')
+        }
+
+
         // props.goToPageAnalises()
         set_pageHome('list')
         set_pageViagens('list')

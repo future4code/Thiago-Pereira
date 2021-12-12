@@ -9,6 +9,7 @@ import PageViagens from "./pages/comp-page-viagens";
 import PageCandidatar from "./pages/comp-page-candidatar";
 import PageSobre from "./pages/comp-page-sobre";
 import PageAnalises from "./pages/comp-page-analises";
+import PageAnalisesNot from "./pages/comp-page-analises-not";
 import PageAnalisesVer from "./pages/comp-page-analises-ver";
 import PageAnalisesCriar from "./pages/comp-page-analises-criar";
 import PageError from "./pages/comp-page-error";
@@ -47,7 +48,13 @@ export const RouterPage = (props) => {
                 <Route exact path={'/admin/trips/list'}>
                     <PageAnalises 
                         setToNavAnalises={props.setToNavAnalises}
+                        acessoOn={props.acessoOn}
+                        loginOn={props.loginOn}
                     />
+                </Route>
+
+                <Route exact path={'/admin/trips/error'}>
+                    <PageAnalisesNot />
                 </Route>
 
                 <Route exact path={'/admin/trips/create'}>

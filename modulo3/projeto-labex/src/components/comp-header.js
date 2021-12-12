@@ -7,7 +7,7 @@ const StyledHeader = styled.div`
     display: flex;
     justify-content: space-between;
     background-color: rgba(243, 243, 244, 1);
-    height: 8vh;
+    height: 11vh;
     text-align: center;
     align-items: center;
 
@@ -34,9 +34,7 @@ export default function CompHeader(props) {
             <div>
             <h2>LABE </h2><h1> X</h1>
             </div>
-            <CompLog 
-                logado={props.logado}
-            />
+            <CompLog />
         </StyledHeader>
     )
 }
