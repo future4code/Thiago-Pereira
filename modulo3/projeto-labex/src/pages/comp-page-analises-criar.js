@@ -1,17 +1,20 @@
-import styled from "styled-components"
-import { StyledBasePage, StyledBaseAnalises } from "../styles/style-pages"
+import { StyledBasePage, StyledPageTitle } from "../styles/style-pages"
 import { StyledForm  } from "../styles/style-form";
-
-import { postCreateTrip } from "../api/labex";
+import { StyledT1Button, StyledPositiveButton } from "../styles/style-item";
 
 import { useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
-
 import { useForm } from "../api/hooks";
+import { postCreateTrip } from "../api/labex";
+
+
 
 export default function PageAnalisesCriar() {
     const history = useHistory();
     const goBackRoute = () => {history.goBack()}
+
+
+
 
     const [selectedPlanet, set_selectedPlanet] = useState("")
 
@@ -27,9 +30,6 @@ export default function PageAnalisesCriar() {
         {id: "9", icon: "💠", planet: "Plutão"},
     ]
 
-    useEffect(()=>{
-
-    }, [selectedPlanet])
 
     let { form, onChange, resetFields} = useForm
     ({
@@ -40,21 +40,16 @@ export default function PageAnalisesCriar() {
         durationInDays: ""
     })
 
+    const selectPlanet = (event) => {
+        set_selectedPlanet(event.target.value)
+    }
 
     const submitForm = (event) => {
         event.preventDefault()
         postCreateTrip(form)
         resetFields()
+    }
 
-        console.log(form)
-        }
-
-        const selectPlanet = (event) => {
-            set_selectedPlanet(event.target.value)
-
-
-        }
-    
 
     const renderedPlanets = selectFormPlanets.map((planet) => {
         return(
@@ -62,18 +57,21 @@ export default function PageAnalisesCriar() {
         )
     })
 
-    const info = () => {
-        console.log(selectedPlanet)
-    }
+    useEffect(()=>{
+
+    }, [selectedPlanet])
 
     return (
         <StyledBasePage>
-            <h3>Criar ADM uma nova viagem</h3>
-            <button onClick={info}>INFO</button>
+            <StyledPageTitle>
+                <h2>Crie uma Missão nova preenchendo os Campos</h2>
+            </StyledPageTitle>
+
             <StyledForm>
                 <form onSubmit={submitForm}>
                 <p>Planetas</p>
-                <select defaultValue="" name={'planet'} onChange={selectPlanet} required>
+                <select defaultValue="" onChange={selectPlanet} required>
+                {/* <select defaultValue="" name={'planet'} onChange={selectPlanet} required> */}
                     <option value="" disabled>Selecione um Planeta</option>
                     {renderedPlanets}
                 </select>
@@ -104,11 +102,12 @@ export default function PageAnalisesCriar() {
                     name={"description"}
                     onChange={onChange}
                 />
-                <button> Criar </button>
+                <StyledPositiveButton> Criar Missão </StyledPositiveButton>
                 </form>
-
-                <button onClick={goBackRoute}>voltar</button>
             </StyledForm>
+            <StyledT1Button>
+                <button onClick={goBackRoute}> VOLTAR </button>
+            </StyledT1Button>
         </StyledBasePage>
     )
 }

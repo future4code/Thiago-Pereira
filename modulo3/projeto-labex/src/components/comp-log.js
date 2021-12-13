@@ -1,13 +1,14 @@
-import styled from "styled-components"
-import { useState } from "react"
-
-import { useForm } from "../api/hooks"
-
-import { myName, baseURL, login } from "../api/labex"
 import axios from "axios"
+import styled from "styled-components"
+
+import { useState } from "react"
+import { useHistory } from "react-router-dom"
+import { useForm } from "../api/hooks"
+import { myName, baseURL } from "../api/labex"
+
+
 
 const StyledLog = styled.div`
-    /* background-color: rgba(243, 243, 244, 1); */
     min-width: 25%;
 `
 
@@ -17,40 +18,38 @@ export default function CompLog() {
     const [userName, set_userName] = useState("")
     const [loginOn, set_loginOn] = useState(false)
     const [token, set_token] = useState("")
+
+    const history = useHistory()
     
     const onChangeName = (event) => {
         set_userName({...userName, [event.target.name]: event.target.value})
     }
 
 
-    const login = (event) => {
+    const login = (event, ) => {
         event.preventDefault()
         const url = `${baseURL}${myName}/login`
         const body = form
             axios.post (url, body
                 ).then((resp) => {
-                    // window.alert("logado")
+                    alert("logado")
                     set_token(resp.data.token)
-                    set_loginOn(resp.data.success)
-                    
+                    set_loginOn(resp.data.success)                    
                     window.localStorage.setItem("token", resp.data.token)
                     window.localStorage.setItem("success", resp.data.success)
-
-                    // console.log(resp.data)
+                    history.push('/admin/trips/list')
                 }).catch((error) => {
                     console.log(error.response)
-                    console.log("log do URL:", url)
-                    console.log("log do Body:", body)
                 })
     }
+
 
     const logout = () => {
         set_loginOn(false)
         set_token("")
-        // window.localStorage.setItem("success", false)
-
         window.localStorage.removeItem("token")
     }
+
 
     return(
         <StyledLog>

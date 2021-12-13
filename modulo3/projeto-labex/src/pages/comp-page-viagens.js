@@ -1,13 +1,10 @@
-import styled from "styled-components"
-import axios from "axios"
-
-import { StyledBasePage, StyledBaseViagens } from "../styles/style-pages"
-import { StyledCard } from "../styles/style-item"
-
-import '../styles/style-color.css'
+import { StyledPageViagens, StyledPageTitle } from "../styles/style-pages"
+import { StyledTripCard } from "../styles/style-cards"
 
 import { useState, useEffect } from "react"
 import { getTrips } from "../api/labex"
+
+
 
 export default function PageViagens() {
     const [tripsList, set_tripsList] = useState([])
@@ -19,24 +16,30 @@ export default function PageViagens() {
 
     const renderedTrips = tripsList.map((item) => {
         return (
-            <StyledCard key={item.id}>  
+            <StyledTripCard key={item.id}>  
                 <h3>{item.name}</h3>
                 <br />
-                <p><h5>Descrição: </h5>{item.description}</p>
-                <p><h5>Planeta: </h5>{item.planet}</p>
-                <p><h5>Duração: </h5>{item.durationInDays} dias</p>
-                <p><h5>Data: </h5>{item.date}</p>
+                <p><strong>Descrição: </strong>{item.description}</p>
+                <p><strong>Planeta: </strong>{item.planet}</p>
+                <p><strong>Duração: </strong>{item.durationInDays} dias</p>
                 <br />
-            </StyledCard>
+            </StyledTripCard>
         )
     })
 
 
 
     return (
-        <StyledBaseViagens>
-            <h2>Veja aqui as Missões que temos disponiveis</h2>
+        <div>
+
+        <StyledPageTitle>
+        <h2>Veja aqui as Missões que temos disponiveis</h2>
+        </StyledPageTitle>
+
+        <StyledPageViagens>
             {renderedTrips}
-        </StyledBaseViagens>
+        </StyledPageViagens>
+
+        </div>
     )
 }

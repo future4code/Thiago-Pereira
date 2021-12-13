@@ -1,15 +1,14 @@
-import styled from "styled-components"
-import { StyledBasePage } from "../styles/style-pages"
+import { StyledBasePage, StyledPageTitle } from "../styles/style-pages"
+import { StyledPositiveButton } from "../styles/style-item"
+import { StyledForm } from "../styles/style-form"
+
 import { useForm } from "../api/hooks"
 import { useState, useEffect } from "react"
-
 import { getTrips, postApplication } from "../api/labex"
-import { StyledForm } from "../styles/style-form"
-import axios from "axios"
 
 
 
-export default function PageCandidatar(props) {
+export default function PageCandidatar() {
     const selectFormArea = [
             {id: "1", icon: "🌱", area: "Biologia"},
             {id: "2", icon: "⚙️", area: "Engenharia"},
@@ -34,7 +33,7 @@ export default function PageCandidatar(props) {
 
     useEffect(() => {
         getTrips(set_tripsList)
-        }, []);
+    }, [selectedArea]);
 
 
 
@@ -55,6 +54,10 @@ export default function PageCandidatar(props) {
         set_selectedTrip(event.target.value)
     }
 
+    const selectArea = (event) => {
+        set_selectedArea(event.target.value)
+    }
+
 
     const submitForm = (event) => {
         event.preventDefault()
@@ -64,8 +67,11 @@ export default function PageCandidatar(props) {
 
     return (
         <StyledBasePage>
+            <StyledPageTitle>
+                <h2>Se Candidate para uma Missão preenchendo os Campos</h2>
+            </StyledPageTitle>
+
             <StyledForm >
-                {/* <button onClick={applyToTrip}> INFO </button> */}
                 <form onSubmit={submitForm}>
                     <p>Missão</p>
                 <select defaultValue="" onChange={selectViagem}>
@@ -101,44 +107,15 @@ export default function PageCandidatar(props) {
                     onChange={onChange}
                 />
                 <p>Area</p>
-                <select defaultValue="" onChange={onChange} >
+                <select defaultValue="" onChange={selectArea} >
                     <option value="" disabled> Escolha uma Area </option>
                     {renderedArea}
                 </select>
 
-                <button>Enviar</button>
+                <StyledPositiveButton> Enviar </StyledPositiveButton>
+
                 </form>
             </StyledForm>
         </StyledBasePage>
     )
 }
-
-
-
-// const applyToTrip = (event) => {
-//         event.preventDefault()
-//         const url = `${baseURL}${myName}/trips/${selectedTrip}/apply`
-//         const body = form
-//         axios.post (url, body
-//             ).then((resp) =>{
-//                 window.alert("sucesso")
-//             }).catch((error) => {
-//                 console.log("applyToTrip:", error.response)
-//                 console.log("log do URL:", url)
-//                 console.log("log do Body:", body)
-//             })
-//     }
-
-    
-
-    // const getTrips = () => {
-    // const url = `${baseURL}${myName}/trips`
-    // axios.get( url, 
-    //     ).then((resp) => {
-    //         console.log(resp.data.trips)
-    //         set_listaViagens(resp.data.trips)
-    //         console.log("aqui", listaViagens)
-    //     }).catch((error) => {
-    //         console.log(error.response)
-    //     })
-    // }

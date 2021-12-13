@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
 
-import '../styles/style-color.css';
 import { StyledNavBar } from "../styles/style-navbar";
 import { useHistory } from "react-router-dom";
 
@@ -10,13 +9,10 @@ display: flex;
 height: 10vh;
 align-items: center;
 justify-content: center;
-/* background-color: var(--cor-bg-principal); */
-
 padding-bottom: 25px;
-
 `
 
-export default function CompNav(props) {
+export default function CompNav() {
     const history = useHistory();
     const [actualPage, set_actualPage] = useState('')
     
@@ -28,7 +24,6 @@ export default function CompNav(props) {
 
     const goToNavHome = () => {
         history.push("/")
-        // props.goToPageHome()
         set_pageHome('list active')
         set_pageViagens('list')
         set_pageCandidatar('list')
@@ -38,7 +33,6 @@ export default function CompNav(props) {
 
     const goToNavViagens = () => {
         history.push('/trips/list')
-        // props.goToPageViagens()
         set_pageHome('list')
         set_pageViagens('list active')
         set_pageCandidatar('list')
@@ -48,7 +42,6 @@ export default function CompNav(props) {
 
     const goToNavCandidatar = () => {
         history.push('/trips/application')
-        // props.goToPageCandidatar()
         set_pageHome('list')
         set_pageViagens('list')
         set_pageCandidatar('list active')
@@ -58,7 +51,6 @@ export default function CompNav(props) {
 
     const goToNavSobre = () => {
         history.push('/wiki')
-        // props.goToPageSobre()
         set_pageHome('list')
         set_pageViagens('list')
         set_pageCandidatar('list')
@@ -74,23 +66,12 @@ export default function CompNav(props) {
             history.push('/admin/trips/list')
         }
 
-
-        // props.goToPageAnalises()
         set_pageHome('list')
         set_pageViagens('list')
         set_pageCandidatar('list')
         set_pageSobre('list')
         set_pageAnalises('list active')
     }
-
-    const setToNavAnalises = () => {
-        set_pageHome('list')
-        set_pageViagens('list')
-        set_pageCandidatar('list')
-        set_pageSobre('list')
-        set_pageAnalises('list active')
-    }
-
 
 
     return(
@@ -108,7 +89,7 @@ export default function CompNav(props) {
                 <li className={`${pageViagens}`}>
                     <a onClick={() => goToNavViagens()}> 
                         <span className="icon"><ion-icon name="airplane-outline"></ion-icon></span>
-                        <span className="text">VIAGENS</span>
+                        <span className="text">MISSÕES</span>
                     </a>
                 </li>
 
@@ -139,15 +120,6 @@ export default function CompNav(props) {
             </ul>
 
             </StyledNavBar>
-
-            {/* <script>
-                const list = document.querySelectorAll('.list')
-                function activeNav(){
-                list.forEach((item) => 
-                item.classList.remove('active'))
-                }
-            </script> */}
-
         </StyledMenu>
     )
 }

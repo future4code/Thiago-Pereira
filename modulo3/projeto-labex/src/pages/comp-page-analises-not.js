@@ -1,11 +1,12 @@
-import styled from "styled-components"
-import { StyledBasePage } from "../styles/style-pages"
-import { useEffect, useState } from "react";
+import { StyledPageViagens } from "../styles/style-pages"
+import { StyledTripCard } from "../styles/style-cards";
 
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 
-export default function PageAnalisesNot(props) {
+
+export default function PageAnalisesNot() {
 
 
     // useEffect(() => {
@@ -23,10 +24,12 @@ export default function PageAnalisesNot(props) {
     // const token = window.localStorage.getItem("success")
 
     return (
-        <StyledBasePage>
+        <StyledPageViagens>
+            <StyledTripCard>
                 <p>SEM ACESSO</p>
-                <h1>Favor Logar</h1>
+                <strong>Favor Logar</strong>
                 <p>Esta Area é restrita!</p>
-        </StyledBasePage>
+            </StyledTripCard>
+        </StyledPageViagens>
     )
 }

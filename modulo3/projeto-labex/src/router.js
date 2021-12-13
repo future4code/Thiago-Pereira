@@ -1,9 +1,5 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import { useHistory } from "react-router";
-
-import { StyledBasePage } from "./styles/style-pages";
-
 import PageHome from "./pages/comp-page-home";
 import PageViagens from "./pages/comp-page-viagens";
 import PageCandidatar from "./pages/comp-page-candidatar";
@@ -15,10 +11,9 @@ import PageAnalisesCriar from "./pages/comp-page-analises-criar";
 import PageError from "./pages/comp-page-error";
 
 import CompNav from "./components/comp-nav";
-import CompSidebar from "./components/comp-sidebar";
 
 
-export const RouterPage = (props) => {
+export const RouterPage = () => {
     return(
         <BrowserRouter>
             <CompNav />
@@ -28,17 +23,11 @@ export const RouterPage = (props) => {
                 </Route>
 
                 <Route exact path={'/trips/list'}>
-                    <PageViagens 
-                        listaViagens={props.listaViagens}
-                        renderedViagens={props.renderedViagens}
-                    />
+                    <PageViagens />
                 </Route>
 
                 <Route exact path={'/trips/application'}>
-                    <PageCandidatar 
-                        listaViagens={props.listaViagens}
-                        renderedViagens={props.renderedViagens}
-                    />
+                    <PageCandidatar />
                 </Route>
 
                 <Route exact path={'/wiki'}>
@@ -46,11 +35,7 @@ export const RouterPage = (props) => {
                 </Route>
 
                 <Route exact path={'/admin/trips/list'}>
-                    <PageAnalises 
-                        setToNavAnalises={props.setToNavAnalises}
-                        acessoOn={props.acessoOn}
-                        loginOn={props.loginOn}
-                    />
+                    <PageAnalises />
                 </Route>
 
                 <Route exact path={'/admin/trips/error'}>
@@ -72,24 +57,3 @@ export const RouterPage = (props) => {
         </BrowserRouter>
     )
 }
-
-
-
-
-
-// const chooseScreen = () => {
-//     switch (actualScreen) {
-//         case 'home':
-//             return <PageHome />
-//         case 'viagens':
-//             return <PageViagens />
-//         case 'candidatar':
-//             return <PageCandidatar />
-//         case 'sobre':
-//             return <PageSobre />
-//         case 'contato':
-//             return <PageAnalises />
-//         default:
-//             return <div>VISH</div>
-//     }
-// }

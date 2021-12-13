@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import '../styles/style-color.css'
 
 import CompLog from "./comp-log"
 

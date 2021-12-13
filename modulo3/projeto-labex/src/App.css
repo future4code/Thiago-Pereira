@@ -2,6 +2,18 @@
   margin: 0;
   padding: 0;
   font-family: 'Oswald', sans-serif;
+
+  --branco: rgb(243, 243, 244);
+  --preto: rgb(20, 17, 15);
+  --cinza: rgba(52, 49, 45, 0.755);
+  --amarelo: rgb(209, 172, 0);
+  --azul: rgb(34, 116, 165);
+
+
+  --prata: rgba(243, 243, 244, 0.8);
+  
+  --negative: red;
+  --positive: rgb(31, 196, 31);
 }
 
 body{

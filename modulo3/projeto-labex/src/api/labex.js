@@ -76,33 +76,17 @@ export const deleteTrip = (id) => {
 }
 
 
-export const decideCandidate = (tripId, candidateId, decision, getTripDetails, set_tripDetail) => {
+export const putDecideCandidate = (id, candidateId, decision, getTripDetails, set_tripDetails) => {
     const token = localStorage.getItem("token")
-    const url = `${baseURL}${myName}/trips/${tripId}/candidates/${candidateId}/decide`
+    const url = `${baseURL}${myName}/trips/${id}/candidates/${candidateId}/decide`
     const body = { approve: decision }
 
     axios.put(url, body, 
             { headers: { auth: token }})
         .then((resp) => {
             let alertText = decision ? "aceito(a)" : "reprovado(a)"
-            getTripDetails(tripId, set_tripDetail)
+            getTripDetails(id, set_tripDetails)
             alert(`Candidato(a) foi ${alertText} para esta missão!`)
-        })
-        .catch((error) => {
-            alert(error.response.data.message)
-        })
-}
-
-
-export const postLogin = (email, password) => {
-    const url = `${baseURL}${myName}/login`
-    const body = { email: email, password: password}
-
-    axios.post(url, body)
-        .then((resp) => {
-            localStorage.setItem("token", resp.data.token)
-            localStorage.setItem("success", resp.data.token)
-            alert("Login efetuado, boas vindas!")
         })
         .catch((error) => {
             alert(error.response.data.message)
