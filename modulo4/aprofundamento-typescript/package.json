@@ -1,0 +1,23 @@
+{
+  "name": "aprofundamento-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node ./build/index.js",
+    "task1": "tsc && node ./build/task1/index.js",
+    "task2": "tsc && node ./build/task2/index.js",
+    "task3": "tsc && node ./build/task3/index.js",
+    "task4": "tsc && node ./build/task4/index.js",
+    "task5": "tsc && node ./build/task5/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.10"
+  }
+}
