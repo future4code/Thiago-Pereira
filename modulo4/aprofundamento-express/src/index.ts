@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 import cors from 'cors'
 import { users } from './data-crew'
 import { messages, Messages } from './data-messages'
@@ -13,11 +13,6 @@ const door = 3001
 
 const serverOn = app.listen(door, () => console.log(`server opened in ${door}`))
 
-
-// Justificativa exercício 6: Eu preferi fazer separado pois sindo que assim eu tenho mais dominio e propriedade dos dados até para se futuramente eu pensar em removelos, alteralos ou adicionar mais.
-
-
-
 app.get("/", (req, resp) => {
     resp.status(200).send("rota de transmição aberta, pois não!?")
 })
@@ -25,6 +20,7 @@ app.get("/", (req, resp) => {
 
 app.get("/planets", (req, resp) => {
     resp.status(200).send({ results: planets})
+
 })
 
 
@@ -91,24 +87,26 @@ app.put("/planets/:id/wildlife", (req, resp) => {
 })
 
 
-app.delete("/planets/:id", (req, resp) => {
+
+app.delete("/planets/:id", (req: Request, resp: Response) => {
     const planetId = Number(req.params.id)
+    
+    if(!planetId) {
+        return resp.status(400).send("ID do planeta desejado não encontrado")
+    }
 
-
-
-
-    for (let i = 0; 1 < planets.length; i++){
+    for (let i = 0; i < planets.length; i++){
+        // console.log(planets)
         if(planets[i].id === planetId){
             planets.splice(i, 1)
         }
     }
 
-    resp.status(200).send(planets)
+    return resp.status(200).send({ planets })
 
-    if(!planetId) {
-        resp.status(400).send("ID do planeta desejado não encontrado")
-    }
 })
+
+
 
 
 app.get("/crew", (req, resp) => {
