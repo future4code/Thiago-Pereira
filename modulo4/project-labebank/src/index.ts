@@ -1,5 +1,6 @@
 import express, { request, Request, Response } from 'express'
 import cors from 'cors'
+import { clients } from './data-bank'
 
 const app = express()
 
@@ -9,20 +10,6 @@ app.use(cors())
 const door = 3001
 
 app.listen(door, () => console.log(`serverON em ${door}`))
-
-type Clients = {
-    name: string,
-    birth: string,
-    cpf: string,
-    balance: number,
-    historic: any[]
-}
-
-let clients: Clients[] = [
-    {name: "Zelda", birth: "25/10/1984", cpf: "111.111.111-11", balance: 0, historic: []}, 
-    {name: "Link", birth: "13/12/1989", cpf: "222.222.222-22", balance: 0, historic: []}, 
-    {name: "Galamoth", birth: "26/07/1993", cpf: "333.333.333.33", balance: 0, historic: []}, 
-]
 
 const actualDate = new Date()
 const actualYear = actualDate.getFullYear()
@@ -76,6 +63,29 @@ app.post('/clients', (req: Request, resp: Response) => {
     }
 })
 
+app.put('/clients', (req: Request, resp: Response) => {
+	let errorCode: number = 400
+	
+	try{
+	const headersCPF = req.headers.cpf
+	const bodyBalance = req.body.balance
+
+	if(headersCPF){
+
+		clients.map((account) => {
+			if(account.cpf === headersCPF){
+					return account.balance = account.balance + bodyBalance
+			}
+	})
+
+	resp.status(200).send({results: clients})
+}
+
+	} catch (error: any) {
+		resp.status(errorCode).send(error.message)
+	}
+})
+
 app.get('/clients/balance', (req: Request, resp: Response) => {
     
     let errorCode: number = 400
@@ -100,50 +110,8 @@ app.get('/clients/balance', (req: Request, resp: Response) => {
         throw new Error('errado')
     }
 
-
-
-
-
-
-        // : 
-        // clients
-
-        
-    // }
     } catch (error: any) {
         resp.status(errorCode).send(error.message)
-    }
-
-    // if(queryCPF && queryName){
-    //     results = queryCPF
-    //     ? 
-    //     clients.filter((account) => {
-    //         return account.cpf.includes(queryCPF && queryName)
-    //     })
-    //     : 
-    //     clients
-    // }
-    
-
-
-        
-    // const queryName = req.query.name as string
-    // const queryCPF = req.query.cpf as string
-
-    // clients.map((account) => {
-    //     if(account.name.includes('KatyPerry')) {
-    //         return account
-    //     }
-        // if(account.cpf.includes(queryCPF)){
-        //     return account
-        // }
-    // })
-})
-
-
-
-
-function results(results: any) {
-    throw new Error('Function not implemented.')
-}
-// Um cliente pode criar uma conta no banco se tiver idade igual ou maior do que 18 anos. Ele deve informar: nome, CPF e data de nascimento. As contas devem guardar essas informações e uma propriedade para representar o saldo do usuário. Além disso devem ser guardados, também, todos os gastos do usuário num array de extrato (possuindo o valor, a data e uma descrição). Lembre-se de que todas as contas, ao serem criadas, começam com o saldo zerado. Não podem existir dois usuários diferentes com o mesmo CPF.
+			}
+			
+		})
