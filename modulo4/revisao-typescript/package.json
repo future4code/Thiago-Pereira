@@ -1,0 +1,28 @@
+{
+  "name": "revisao-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "task1": "tsc && node ./build/exercicio1",
+    "task2": "tsc && node ./build/exercicio2",
+    "task3": "tsc && node ./build/exercicio3",
+    "task4": "tsc && node ./build/exercicio4",
+    "task5": "tsc && node ./build/exercicio5",
+    "task6": "tsc && node ./build/exercicio6",
+    "task7": "tsc && node ./build/exercicio7",
+    "task8": "tsc && node ./build/exercicio8",
+    "task9": "tsc && node ./build/exercicio9",
+    "task10": "tsc && node ./build/exercicio10",
+    "task11": "tsc && node ./build/exercicio11"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^4.5.5"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.10"
+  }
+}
