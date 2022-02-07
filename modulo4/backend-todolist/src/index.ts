@@ -156,7 +156,7 @@ app.post("/task", async (req: Request, resp: Response) => {
         let limit_date = req.body.limit_date
         const creator_user_id = req.body.creator_user_id
 
-        limit_date = limit_date.split('/').reverse().join('/')
+        limit_date = limit_date.split('/').reverse().join('-')
         id = 'taskId' + Date.now().toString()
 
         if ( !title || !description || !limit_date || !creator_user_id ){
