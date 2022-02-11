@@ -16,7 +16,7 @@ export const addNewUser = async (req: Request, resp: Response): Promise<void> =>
             throw new Error("Verifique se todos os campos estão preenchidos corretamente");
         }
         
-        const users = await interactMySQL(id, name, email, password)
+        const users = await interactMySQL({id, name, email, password})
 
         resp.status(201).send(users)
     } catch (error:any) {
@@ -24,7 +24,7 @@ export const addNewUser = async (req: Request, resp: Response): Promise<void> =>
     }
 }
 
-const interactMySQL = async (id: any, name: string, email: string, password: string):Promise<any> => {
+const interactMySQL = async ({id, name, email, password}:User):Promise<any> => {
     await connection.raw(`
         INSERT INTO labecommerce_users (id, name, email, password) VALUES ("${id}", "${name}", "${email}", "${password}");
     `)

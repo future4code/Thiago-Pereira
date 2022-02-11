@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import { connection } from "../../Data/connection";
 
+import { Purchage } from "../../Types/Purchages";
+
 export const addRegisterPurchase = async (req: Request, resp: Response) => {
     let errorCode = 400
     try{
-        const id = "PurchaseID" + Date.now().toString()
-        const userID = req.body.user_id
-        const productID = req.body.product_id
+        const id: string = "PurchaseID" + Date.now().toString()
+        const user_id: string = req.body.user_id
+        const product_id: string = req.body.product_id
         const quantity: number = Number(req.body.quantity)
 
 
@@ -16,7 +18,7 @@ export const addRegisterPurchase = async (req: Request, resp: Response) => {
             }
 
             const idUserVerification = await connection.raw(`
-                SELECT id FROM labecommerce_users WHERE id = "${userID}"
+                SELECT id FROM labecommerce_users WHERE id = "${user_id}"
             `)
 
             if(!idUserVerification[0].length){
@@ -25,7 +27,7 @@ export const addRegisterPurchase = async (req: Request, resp: Response) => {
             }
 
             const idProductVerification = await connection.raw(`
-                SELECT * FROM labecommerce_products WHERE id = "${productID}";
+                SELECT * FROM labecommerce_products WHERE id = "${product_id}";
             `)
 
                 if(!idProductVerification[0].length){
@@ -35,7 +37,7 @@ export const addRegisterPurchase = async (req: Request, resp: Response) => {
 
         const total_price = idProductVerification[0][0].price*quantity
             
-        await interactMySQL(id, userID, productID, quantity, total_price)
+        await interactMySQL({id, user_id, product_id, quantity, total_price})
 
         const results = await connection.raw(`
             SELECT * FROM labecommerce_purchases;
@@ -48,10 +50,9 @@ export const addRegisterPurchase = async (req: Request, resp: Response) => {
 }
 
 
-const interactMySQL = async(id: string, userID: string, productID: string, 
-                            quantity: number, total_price: number):Promise<any> => {
+const interactMySQL = async({id, user_id, product_id, quantity, total_price}: Purchage):Promise<any> => {
     await connection.raw(`
         INSERT INTO labecommerce_purchases (id, user_id, product_id, quantity, total_price) VALUES
-            ("${id}", "${userID}", "${productID}", "${quantity}", "${total_price}");
+            ("${id}", "${user_id}", "${product_id}", "${quantity}", "${total_price}");
     `)
 }
