@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { connection } from "../Data/connection";
+import { connection } from "../../Data/connection";
 
 export const deleteUserById = async (req: Request, resp: Response): Promise<void> => {
     let errorCode = 400
@@ -10,15 +10,14 @@ export const deleteUserById = async (req: Request, resp: Response): Promise<void
             SELECT id FROM labecommerce_users WHERE id = "${id}";
         `)
 
-        if(!idVerification[0].length){
-            throw new Error('ID não existe')
-        }
+            if(!idVerification[0].length){
+                errorCode = 422
+                throw new Error('este ID não existe')
+            }
         
         await interactMySQL(id)
 
-
         resp.status(200).send("Deletado com sucesso!")
-
     } catch (error:any) {
         resp.status(errorCode).send( error.message || error.sqlMessage )
     }

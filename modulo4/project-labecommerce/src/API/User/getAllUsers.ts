@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { connection } from "../Data/connection";
+import { connection } from "../../Data/connection";
 
 export const getAllUsers = async (req: Request, resp: Response): Promise<void> => {
     let errorCode = 400
