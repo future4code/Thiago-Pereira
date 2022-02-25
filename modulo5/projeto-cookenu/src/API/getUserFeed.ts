@@ -1,6 +1,4 @@
 import { Request, Response } from "express"
-import idMaker from "../Utilities/idMaker"
-import tokenMaker from "../Utilities/tokenMaker"
 import { User } from "../Types/class_user"
 import { UserDataBase } from "../Data/UserDataBase"
 

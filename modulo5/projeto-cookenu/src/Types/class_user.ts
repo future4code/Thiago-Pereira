@@ -26,4 +26,8 @@ export class User {
     public get_password():any{
         return this.password
     }
+
+    static toUserModel(data: any): User{
+        return new User(data.id, data.name, data.email, data.password)
+    }
 } 

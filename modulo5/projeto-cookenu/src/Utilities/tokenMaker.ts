@@ -1,16 +1,21 @@
 import * as jwt from "jsonwebtoken";
+export interface AutheticationData {
+  id: string
+}
 
-const expiresIn = "1min"
+export class TokenMaker {
 
-export default function tokenMaker (input: any): string {
-  const token = jwt.sign(
-    {
-      id: input.id
-    },
-    process.env.JWT_TOKEN as string,
-    {
-      expiresIn
-    }
-  );
-  return token;
-} 
+  public generate(input: AutheticationData): string {
+    const token = jwt.sign(
+      input,
+      process.env.JWT_TOKEN as string,
+      { expiresIn: process.env.EXPIRES_IN },
+      )
+    return token
+  }
+
+  public verify(token: string): AutheticationData {
+    const data = jwt.verify(token, process.env.JWT_TOKEN)
+      return data as AutheticationData
+  }
+}
