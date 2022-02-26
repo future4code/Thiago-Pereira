@@ -1,21 +1,25 @@
 import { app } from "./app"
 
-import { createNewRecipe } from "./API/createNewRecipe"
-import { followUserWithId } from "./API/followUserWithId"
-import { getUserByToken } from "./API/getUserByToken"
-import { getUserFeed } from "./API/getUserFeed"
+import { getYourProfile } from "./API/getYourProfile"
+import { getProfileById } from "./API/getProfileById"
+import { getRecipeById } from "./API/getRecipeById"
 import { login } from "./API/login"
 import { signup } from "./API/signup"
-import { IdMaker } from "./Utilities/idMaker"
+import { createNewRecipe } from "./API/createNewRecipe"
+
+import {IdMaker} from "./Utilities/idMaker"
 
 
 
+
+app.get("/user/profile", getYourProfile)
+app.get("/user/:id", getProfileById)
 
 app.post("/signup", signup)
 app.post("/login", login)
 
-app.get("/user/profile", getUserByToken)
-app.get("/user/:id", followUserWithId)
-
-app.get("/recipe/:id", getUserFeed)
 app.post("/recipe", createNewRecipe)
+app.get("/recipe/:id", getRecipeById)
+
+const creationDate = new Date().toISOString().split("T")[0]
+console.log(creationDate.split("-").reverse().join("/"))

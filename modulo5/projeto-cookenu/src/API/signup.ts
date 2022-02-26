@@ -47,11 +47,11 @@ export const signup = async (req: Request, resp: Response):Promise<void> => {
 
         const token = tokenMaker.generate( { id: id } )
 
-            const userBody = new User(id, name, email, hashPassword)
-            await userData.createUser(userBody)
+        const userBody = new User(id, name, email, hashPassword)
+        await userData.createUser(userBody)
 
         resp.status(201).send({message: 'Usuário(a) criado(a) com sucesso!', token})
     } catch (error: any) {
-        resp.status(errorCode).send( error.message || error.mysqlMessage )
+        resp.status(errorCode).send( error.message || error.sqlMessage )
     }
 }

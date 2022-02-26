@@ -32,20 +32,20 @@ export const login = async (req: Request, resp: Response):Promise<void> => {
                 throw new Error('Este Email não está cadastrado!!')
             }
 
-        const passwordCompare = await hashManager.compare(password, userByEmail.get_password())
+            const passwordCompare = await hashManager.compare(password, userByEmail.get_password())
 
-        if(!passwordCompare){
-            errorCode = 401
-            throw new Error('Email ou Password incorretos!')
-        }
+            if(!passwordCompare){
+                errorCode = 401
+                throw new Error('Email ou Password incorretos!')
+            }
 
-        const id = userByEmail.get_id
+        const id = userByEmail.get_id()
             
         const token = tokenMaker.generate( {id: id} )
 
 
         resp.status(200).send({message: "Logado com sucesso", token})
     } catch (error: any) {
-        resp.status(errorCode).send( error.message || error.mysqlMessage )
+        resp.status(errorCode).send( error.message || error.sqlMessage )
     }
 }
