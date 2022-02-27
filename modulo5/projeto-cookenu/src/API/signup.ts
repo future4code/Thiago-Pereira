@@ -10,14 +10,14 @@ export const signup = async (req: Request, resp: Response):Promise<void> => {
     let errorCode = 400
     try{
         const {name, email, password} = req.body
+            // comentário: eu não sei como eu typo "desistruturação de objeto" :nazare-confusa:
+        const userData: UserDataBase = new UserDataBase()
 
-        const userData = new UserDataBase()
-
-        const idMaker = new IdMaker()
+        const idMaker: IdMaker = new IdMaker()
         
-        const hashManager = new HashManager()
+        const hashManager: HashManager = new HashManager()
 
-        const tokenMaker = new TokenMaker()
+        const tokenMaker: TokenMaker = new TokenMaker()
 
             if(!email.includes('@')){
                 errorCode = 422
@@ -29,7 +29,7 @@ export const signup = async (req: Request, resp: Response):Promise<void> => {
                 throw new Error('Verifique se todos os campos foram preenchidos')
             }
 
-            const userByEmail = await userData.getUserByEmail(email)
+        const userByEmail: User = await userData.getUserByEmail(email)
 
             if(userByEmail){
                 errorCode = 409
@@ -41,13 +41,13 @@ export const signup = async (req: Request, resp: Response):Promise<void> => {
                 throw new Error('Seu Password precisa conter um mínimo de 6 dígitos')
             }
 
-        const id = idMaker.generate()
+        const id: string = idMaker.generate()
 
-        const hashPassword = await hashManager.hash(password)
+        const hashPassword: string = await hashManager.hash(password)
 
-        const token = tokenMaker.generate( { id: id } )
+        const token: string = tokenMaker.generate( { id: id } )
 
-        const userBody = new User(id, name, email, hashPassword)
+        const userBody: User = new User(id, name, email, hashPassword)
         await userData.createUser(userBody)
 
         resp.status(201).send({message: 'Usuário(a) criado(a) com sucesso!', token})

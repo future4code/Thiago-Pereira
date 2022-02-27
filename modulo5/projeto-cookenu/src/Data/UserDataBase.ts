@@ -49,4 +49,5 @@ export class UserDataBase extends ConnectionData {
             throw new Error( error.sqlMessage || error.message)
         }
     }
+    
 } 

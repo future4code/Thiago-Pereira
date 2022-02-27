@@ -8,12 +8,12 @@ export const login = async (req: Request, resp: Response):Promise<void> => {
     let errorCode = 400
     try{
         const { email, password } = req.body
+            // comentário: eu não sei como eu typo "desistruturação de objeto" :nazare-confusa:
+        const userData: UserDataBase = new UserDataBase()
 
-        const userData = new UserDataBase()
+        const hashManager: HashManager = new HashManager()
 
-        const hashManager = new HashManager()
-
-        const tokenMaker = new TokenMaker()
+        const tokenMaker: TokenMaker = new TokenMaker()
 
             if(!email.includes('@')){
                 errorCode = 422
@@ -25,26 +25,26 @@ export const login = async (req: Request, resp: Response):Promise<void> => {
                 throw new Error('Verifique se todos os campos foram preenchidos')
             }
 
-            const userByEmail = await userData.getUserByEmail(email)
+        const userByEmail: User = await userData.getUserByEmail(email)
 
             if(!userByEmail){
                 errorCode = 409
                 throw new Error('Este Email não está cadastrado!!')
             }
 
-            const passwordCompare = await hashManager.compare(password, userByEmail.get_password())
+        const passwordCompare: boolean = await hashManager.compare(password, userByEmail.get_password())
 
             if(!passwordCompare){
                 errorCode = 401
                 throw new Error('Email ou Password incorretos!')
             }
 
-        const id = userByEmail.get_id()
+        const id: string = userByEmail.get_id()
             
-        const token = tokenMaker.generate( {id: id} )
+        const token: string = tokenMaker.generate( {id: id} )
 
 
-        resp.status(200).send({message: "Logado com sucesso", token})
+        resp.status(200).send({message: "Logado(a) com sucesso", token})
     } catch (error: any) {
         resp.status(errorCode).send( error.message || error.sqlMessage )
     }

@@ -1,22 +1,21 @@
 import { Request, Response } from "express"
-import { User } from "../Types/class_user"
-import { UserDataBase } from "../Data/UserDataBase"
 import { RecipeDataBase } from "../Data/RecipeDataBase"
-import { IdMaker } from "../Utilities/idMaker"
 import { Recipe } from "../Types/class_recipe"
-import { TokenMaker } from "../Utilities/tokenMaker"
+import { IdMaker } from "../Utilities/idMaker"
+import { AutheticationData, TokenMaker } from "../Utilities/tokenMaker"
 
 export const createNewRecipe = async (req: Request, resp: Response):Promise<void> => {
     let errorCode = 400
     try{
         const { title, description, url_image } = req.body
-        const token = req.headers.authorization
+            // comentário: eu não sei como eu typo "desistruturação de objeto" :nazare-confusa:
+        const token: string = req.headers.authorization
 
-        const recipeData = new RecipeDataBase()
+        const recipeData: RecipeDataBase = new RecipeDataBase()
         
-        const idMaker = new IdMaker()
+        const idMaker: IdMaker = new IdMaker()
 
-        const tokenMaker = new TokenMaker()
+        const tokenMaker: TokenMaker = new TokenMaker()
 
             if(!title || !description || !url_image){
                 errorCode = 422
@@ -28,18 +27,22 @@ export const createNewRecipe = async (req: Request, resp: Response):Promise<void
                 throw new Error('O token no authorization não foi informado')
             }
 
-            const tokenVerify = tokenMaker.verify(token)
-            const user_id = tokenVerify.id
+        const tokenVerify: AutheticationData = tokenMaker.verify(token)
+        const user_id: string = tokenVerify.id
+
+            if(!tokenVerify){
+                errorCode = 401
+                throw new Error('Este Token não é valido!')
+            }
         
+        const id: string = idMaker.generate()
 
-        const id = idMaker.generate()
+        const date: string = new Date().toISOString().split("T")[0]
 
-        const date = new Date().toISOString().split("T")[0]
-
-        const recipeBody = new Recipe(id, title, description, date, user_id, url_image)
+        const recipeBody: Recipe = new Recipe(id, title, description, date, user_id, url_image)
         await recipeData.createRecipe(recipeBody)
 
-        resp.status(200).send(recipeBody)
+        resp.status(200).send({message: "Receita criada com sucesso", recipe: recipeBody})
     } catch (error: any) {
         resp.status(errorCode).send( error.message || error.sqlMessage )
     }

@@ -27,4 +27,15 @@ export class RecipeDataBase extends ConnectionData {
             throw new Error( error.sqlMessage || error.message )
         }
     }
+
+    public async deleteRecipeById(id: string):Promise<void>{
+        try{
+            await ConnectionData.connection("Cookenu_recipes")
+                .where('id', id)
+                .del()
+        } catch (error: any){
+            throw new Error( error.sqlMessage || error.message )
+        }
+    }
+
 }
