@@ -1,4 +1,3 @@
-import { Request, Response } from "express"
 import { Inter_UserRepository } from "../../Interface/interface_UserRepository"
 import { Type_User } from "../../Models/type_user"
 import { HashManager } from "../../Services/hashManager"

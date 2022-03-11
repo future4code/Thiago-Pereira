@@ -1,7 +1,6 @@
-import { Request, Response } from "express"
 import { Inter_PostRepository } from "../../Interface/interface_PostRepository"
 import { autheticationData } from "../../Models/authenticationData"
-import { Type_Post } from "../../Models/type-post"
+import { POST_CATEGORIES, Type_Post } from "../../Models/type-post"
 import { inputPostCreateDTO } from "../../Types/inputPostDTO"
 import { IdMaker } from "../../Utilities/idMaker"
 import { TokenMaker } from "../../Utilities/tokenMaker"
@@ -21,10 +20,12 @@ export class PostSetting {
     createNewPost = async (input: inputPostCreateDTO, token: string):Promise<any> => {
         const {description, url_photo, category} = input
 
+        const categoryWorked = category.toLocaleLowerCase()
+
         let message  = 'Post is created'
         let statusCode = 201
 
-        if(!description || !url_photo || !category) {
+        if(!description || !url_photo || !categoryWorked) {
             statusCode = 406
             message = '"description", "url_photo" and "category" must be provided'
             throw new Error(message)
@@ -33,6 +34,12 @@ export class PostSetting {
         if(!token){
             statusCode = 406
             message = 'The headers token is not informed.'
+            throw new Error(message)
+        }
+
+        if(categoryWorked !== POST_CATEGORIES.NORMAL && categoryWorked !== POST_CATEGORIES.EVENT) {
+            statusCode = 406
+            message = 'The post need be of catagory "normal" or "event"'
             throw new Error(message)
         }
 
@@ -51,7 +58,7 @@ export class PostSetting {
             id: id,
             description: input.description,
             url_photo: input.url_photo,
-            category: input.category,
+            category: categoryWorked,
             created_at: creationDate,
             creator_id: tokenVerify.id
         }
@@ -71,8 +78,6 @@ export class PostSetting {
             throw new Error(message)
         }
 
-        const tokenVerify: autheticationData = this.tokenMaker.verify(token)
-
         const postData: Type_Post = await this.postDatabase.findById(id)
 
         if(!postData){
@@ -82,6 +87,7 @@ export class PostSetting {
         }
 
         const convertedDate:string = postData.created_at.toISOString().split("T")[0]
+        const reloadedData: string = convertedDate.split("-").reverse().join("/")
 
 
         const post: Type_Post = {
@@ -89,7 +95,7 @@ export class PostSetting {
             description: postData.description,
             url_photo: postData.url_photo,
             category: postData.category,
-            created_at: convertedDate,
+            created_at: reloadedData,
             creator_id: postData.creator_id
         }
 
