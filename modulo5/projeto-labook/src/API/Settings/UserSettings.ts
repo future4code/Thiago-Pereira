@@ -1,4 +1,5 @@
 import { Inter_UserRepository } from "../../Interface/interface_UserRepository"
+import { autheticationData } from "../../Models/authenticationData"
 import { Type_User } from "../../Models/type_user"
 import { HashManager } from "../../Services/hashManager"
 import { inputUserLoginDTO, inputUserSignupDTO } from "../../Types/inputUserDTO"
@@ -86,4 +87,52 @@ export class UserSettings {
 
         return {token, statusCode, message}
     }
+
+    followAnUser = async (id: string, token: string) => {
+
+        let message  = 'Following is completed'
+        let statusCode = 200
+            
+        if(!id){
+            statusCode = 406
+            message = 'Please informes an id in path params.'
+                throw new Error(message)
+        }
+
+        if(!token){
+            statusCode = 406
+            message = 'The headers token is not informed.'
+            throw new Error(message)
+        }
+        
+        const tokenVerify: autheticationData = this.tokenMaker.verify(token)
+        
+        if(!tokenVerify){
+            message = 'This token is invalid'
+            throw new Error(message)
+        }
+
+        const idVerify = await this.userDatabase.findById(id)
+
+        if(!idVerify){
+            message = 'Invalid id, user not found'
+            throw new Error(message)
+        }
+        
+        const userData = await this.userDatabase.findFriendshipById(tokenVerify.id, id)
+
+
+        if(!userData){
+            await this.userDatabase.followAnUser(tokenVerify.id, id)
+            await this.userDatabase.followAnUser(id, tokenVerify.id)
+        } else{
+            message = 'You already follow this user.'
+            throw new Error(message)
+        }
+
+        message = `The ${idVerify.name} is following you too.`
+        
+        return {statusCode, message}
+            
+        }
 }

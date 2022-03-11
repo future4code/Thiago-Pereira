@@ -33,7 +33,7 @@ export class PostController {
     }
 
     getPostById = async (req: Request, resp: Response):Promise<any> => {
-        const { id } = req.params
+        const id: string = req.params.id as string
 
         const token: string = req.headers.authorization as string
 

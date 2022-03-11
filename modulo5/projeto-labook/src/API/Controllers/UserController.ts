@@ -11,7 +11,7 @@ export class UserController {
     }
 
     signup = async (req: Request, resp: Response):Promise<any> => {
-        const {name, email, password} = req.body
+        const {name, email, password}: {name: string, email: string, password: string} = req.body
 
         const inputSignUp: inputUserSignupDTO = {
             name: name,
@@ -31,7 +31,7 @@ export class UserController {
     }
 
     login = async (req: Request, resp: Response):Promise<any> => {
-        const {email, password} = req.body
+        const {email, password}: {email: string, password: string} = req.body
 
         const inputLogin: inputUserLoginDTO = { 
             email: email,
@@ -46,6 +46,27 @@ export class UserController {
 
             resp.status(400).send( error.mesage || error.mysql )
         }
+    }
+
+    followAnUser = async (req: Request, resp: Response):Promise<any> => {
+        const id: string = req.params.id as string
+
+        const token: string = req.headers.authorization as string
+
+        try{
+            const user = await this.userSettings.followAnUser(id, token)
+
+            resp.status(user.statusCode).send({message: user.message})
+        } catch(error: any){
+            if (error.message) return resp.status(400).send(error.message || error.mysql )
+
+            resp.status(400).send( error.mesage || error.mysql )
+        }
+    }
+
+    unfollowAnUser = async (req: Request, resp: Response):Promise<any> => {
+
+
     }
 
 }

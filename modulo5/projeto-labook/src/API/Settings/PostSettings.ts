@@ -72,6 +72,12 @@ export class PostSetting {
         let message  = 'Post is created'
         let statusCode = 200
 
+        if(!id){
+            statusCode = 406
+            message = 'Please informes an id in path params.'
+            throw new Error(message)
+        }
+
         if(!token){
             statusCode = 406
             message = 'The headers token is not informed.'
@@ -86,9 +92,8 @@ export class PostSetting {
             throw new Error (message)
         }
 
-        const convertedDate:string = postData.created_at.toISOString().split("T")[0]
+        const convertedDate: string = postData.created_at.toISOString().split("T")[0]
         const reloadedData: string = convertedDate.split("-").reverse().join("/")
-
 
         const post: Type_Post = {
             id: postData.id,

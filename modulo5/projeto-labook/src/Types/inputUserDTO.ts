@@ -8,3 +8,7 @@ export type inputUserLoginDTO = {
     email: string,
     password: string
 }
+
+export type paramsUserFollow = {
+    id: string
+}
