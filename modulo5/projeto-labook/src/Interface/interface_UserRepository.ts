@@ -2,6 +2,7 @@ import { Type_User } from "../Models/type_user"
 
 export interface Inter_UserRepository {
     createNewUser(user: Type_User):Promise<void>
+    getAllUsers():Promise<Type_User | null>
     findByEmail(email: string):Promise<Type_User | null>
     findById(id: string):Promise<Type_User | null>
     findFriendshipById(followerId: string, followedId:string): Promise<any | null>

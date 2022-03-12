@@ -17,6 +17,7 @@ export class PostSetting {
         this.tokenMaker = new TokenMaker()
     }
 
+
     createNewPost = async (input: inputPostCreateDTO, token: string):Promise<any> => {
         const {description, url_photo, category} = input
 
@@ -67,8 +68,37 @@ export class PostSetting {
         return {postBase, statusCode, message}
     }
 
-    getPostById = async (id: string, token: string):Promise<any> => {
+    getAllPosts = async (token: string): Promise<any> => {
 
+        let message = 'This is all posts.'
+        let statusCode = 200
+
+        if(!token){
+            statusCode = 406
+            message = 'The headers token is not informed.'
+            throw new Error(message)
+        }
+        
+        const tokenVerify: autheticationData = this.tokenMaker.verify(token)
+        
+        if(!tokenVerify){
+            message = 'This token is invalid'
+            throw new Error(message)
+        }
+
+        const postData = await this.postDatabase.getAllPosts()
+
+        if(!postData){
+            message = 'Cannot has anything this time.'
+        }
+
+        
+
+        return {statusCode, message, postData}
+    }
+
+
+    getPostById = async (id: string, token: string):Promise<any> => {
         let message  = 'Post is created'
         let statusCode = 200
 
@@ -103,7 +133,81 @@ export class PostSetting {
             created_at: reloadedData,
             creator_id: postData.creator_id
         }
-
         return {post, statusCode}
+    }
+
+    deletePostById = async (id: string | any, token: string):Promise<any> => {
+        let message  = 'Post is deleted'
+        let statusCode = 201
+
+        if(!id){
+            statusCode = 406
+            message = 'Please informes an id in path params.'
+            throw new Error(message)
+        }
+
+        if(!token){
+            statusCode = 406
+            message = 'The headers token is not informed.'
+            throw new Error(message)
+        }
+
+        await this.postDatabase.deletePostById(id)
+
+        return {message, statusCode}
+    }
+
+    changePostPhotoById = async (id: string | any, token: string, url_photo: string):Promise<any> => {
+        let message  = 'Post photo url is changed'
+        let statusCode = 200
+
+        if(!id){
+            statusCode = 406
+            message = 'Please informes an id in path params.'
+            throw new Error(message)
+        }
+
+        if(!token){
+            statusCode = 406
+            message = 'The headers token is not informed.'
+            throw new Error(message)
+        }
+
+        const postData: Type_Post = await this.postDatabase.changePostPhotoById(id, url_photo)
+
+        if(!postData){
+            statusCode = 404
+            message = 'Invalid id, post not found'
+            throw new Error (message)
+        }
+
+        return {message, statusCode, postData}
+    }
+
+    changePostDescriptionById = async (id: string | any, token: string, description: string):Promise<any> => {
+        let message  = 'Post description is changed'
+        let statusCode = 200
+
+        if(!id){
+            statusCode = 406
+            message = 'Please informes an id in path params.'
+            throw new Error(message)
+        }
+
+        if(!token){
+            statusCode = 406
+            message = 'The headers token is not informed.'
+            throw new Error(message)
+        }
+
+        const postData: Type_Post = await this.postDatabase.changePostDescriptionById(id, description)
+
+        if(!postData){
+            statusCode = 404
+            message = 'Invalid id, post not found'
+            throw new Error (message)
+        }
+
+        return {message, statusCode, postData}
     }
 }

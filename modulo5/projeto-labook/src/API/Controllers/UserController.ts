@@ -48,6 +48,20 @@ export class UserController {
         }
     }
 
+    getAllUsers = async (req: Request, resp: Response):Promise<any> => {
+        const token: string = req.headers.authorization as string
+
+        try{
+            const users = await this.userSettings.getAllUsers(token)
+
+            resp.status(users.statusCode).send({message: users.message, results: users.userData})
+        } catch (error: any){
+            if (error.message) return resp.status(400).send(error.message || error.mysql )
+
+            resp.status(400).send( error.mesage || error.mysql )
+        }
+    }
+
     followAnUser = async (req: Request, resp: Response):Promise<any> => {
         const id: string = req.params.id as string
 
@@ -65,8 +79,20 @@ export class UserController {
     }
 
     unfollowAnUser = async (req: Request, resp: Response):Promise<any> => {
+        const id: string = req.params.id as string
+        
+        const token: string = req.headers.authorization as string
 
+        try{
+            const user = await this.userSettings.unfollowerUser(id, token)
 
+            resp.status(user.statusCode).send({message: user.message})
+        } catch (error: any){
+            if (error.message) return resp.status(400).send(error.message || error.mysql )
+
+            resp.status(400).send( error.mesage || error.mysql )
+        }
     }
 
+    
 }

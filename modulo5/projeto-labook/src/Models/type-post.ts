@@ -7,7 +7,7 @@ export type Type_Post = {
     id: string
     description: string
     category: POST_CATEGORIES
-    created_at: string
+    created_at: string | any
     url_photo: string
     creator_id: string
 }

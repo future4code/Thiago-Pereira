@@ -88,6 +88,33 @@ export class UserSettings {
         return {token, statusCode, message}
     }
 
+    getAllUsers = async (token: string): Promise<any> => {
+
+        let message = 'This is all users.'
+        let statusCode = 200
+
+        if(!token){
+            statusCode = 406
+            message = 'The headers token is not informed.'
+            throw new Error(message)
+        }
+        
+        const tokenVerify: autheticationData = this.tokenMaker.verify(token)
+        
+        if(!tokenVerify){
+            message = 'This token is invalid'
+            throw new Error(message)
+        }
+
+        const userData = await this.userDatabase.getAllUsers()
+
+        if(!userData){
+            message = 'Cannot has anything this time.'
+        }
+
+        return {statusCode, message, userData}
+    }
+
     followAnUser = async (id: string, token: string) => {
 
         let message  = 'Following is completed'
@@ -115,7 +142,12 @@ export class UserSettings {
         const idVerify = await this.userDatabase.findById(id)
 
         if(!idVerify){
-            message = 'Invalid id, user not found'
+            message = 'Invalid id, user not found.'
+            throw new Error(message)
+        }
+
+        if(tokenVerify.id === id){
+            message = 'You cannot follow yourself'
             throw new Error(message)
         }
         
@@ -134,5 +166,57 @@ export class UserSettings {
         
         return {statusCode, message}
             
+    }
+
+    unfollowerUser = async (id: string, token: string) => {
+        let message  = 'Unfollowing is completed'
+        let statusCode = 200
+
+        if(!id){
+            statusCode = 406
+            message = 'Please informes an id in path params.'
+                throw new Error(message)
         }
+
+        if(!token){
+            statusCode = 406
+            message = 'The headers token is not informed.'
+            throw new Error(message)
+        }
+        
+        const tokenVerify: autheticationData = this.tokenMaker.verify(token)
+        
+        if(!tokenVerify){
+            message = 'This token is invalid'
+            throw new Error(message)
+        }
+
+        const idVerify = await this.userDatabase.findById(id)
+
+        if(!idVerify){
+            message = 'Invalid id, user not found.'
+            throw new Error(message)
+        }
+
+        if(tokenVerify.id === id){
+            message = 'You cannot unfollow yourself'
+            throw new Error(message)
+        }
+        
+        const userData = await this.userDatabase.findFriendshipById(tokenVerify.id, id)
+
+
+        if(userData){
+            await this.userDatabase.unfollowAnUser(tokenVerify.id, id)
+            await this.userDatabase.unfollowAnUser(id, tokenVerify.id)
+            console.log(userData)
+        } else{
+            message = 'You not follow this user.'
+            throw new Error(message)
+        }
+
+        message = `The ${idVerify.name} is unfollowing you too.`
+        
+        return {statusCode, message}
+    }
 }
