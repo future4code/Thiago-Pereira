@@ -6,6 +6,9 @@ export interface Inter_UserRepository {
     findByEmail(email: string):Promise<Type_User | null>
     findById(id: string):Promise<Type_User | null>
     findFriendshipById(followerId: string, followedId:string): Promise<any | null>
+    findFriendshipByTokenId (id: string): Promise<any | null>
     followAnUser(follow: string, followBack: string): Promise<void>
     unfollowAnUser(unfollow: string, unfollowBack: string): Promise<void>
+    deleteUserByToken(id: string): Promise<void>
+    destroyFriendshipById(id: string): Promise<void>
 }

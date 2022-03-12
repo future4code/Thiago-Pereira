@@ -251,4 +251,48 @@ export class UserSettings {
         
         return {statusCode, message}
     }
+
+
+
+
+
+
+    deleteUserByToken = async (token: string) => {
+        let message: string  = 'Unfollowing is completed'
+        let statusCode: number = 200
+
+        if(!token){
+            statusCode = 406
+            message = 'The headers token is not informed.'
+            throw new Error(message)
+        }
+        
+        const tokenVerify: autheticationData = this.tokenMaker.verify(token)
+        
+        if(!tokenVerify){
+            message = 'This token is invalid'
+            throw new Error(message)
+        }
+
+        const DestroyFriendships: Type_User = await this.userDatabase.findFriendshipByTokenId(tokenVerify.id)
+        
+        console.log(DestroyFriendships)
+        
+        if(DestroyFriendships){
+            await this.userDatabase.destroyFriendshipById(tokenVerify.id)
+        }
+
+        const userData: Type_User = await this.userDatabase.findById(tokenVerify.id)
+
+        message = `The ${userData.name} is is deleted from this world.`
+
+        if(userData){
+            await this.userDatabase.deleteUserByToken(tokenVerify.id)
+        } else{
+            message = 'You cannot delete this user.'
+            throw new Error(message)
+        }
+
+        return {statusCode, message}
+    }
 }

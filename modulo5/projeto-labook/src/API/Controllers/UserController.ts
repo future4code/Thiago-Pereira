@@ -109,5 +109,17 @@ export class UserController {
         }
     }
 
-    
+    deleteUserByToken = async (req: Request, resp: Response):Promise<any> => {
+        const token: string = req.params.token as string
+
+        try{
+            const user: any = await this.userSettings.deleteUserByToken(token)
+
+            resp.status(user.statusCode).send({message: user.message})
+        } catch (error: any){
+            if (error.message) return resp.status(400).send(error.message || error.mysql )
+
+            resp.status(400).send( error.mesage || error.mysql )
+        }
+    }
 }

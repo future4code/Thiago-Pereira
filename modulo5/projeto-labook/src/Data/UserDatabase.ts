@@ -50,6 +50,16 @@ export class UserDatabase extends BaseDatabase implements Inter_UserRepository {
             return results.length ? results[0] : null
     }
 
+    async findFriendshipByTokenId (id: string): Promise<any | null> {
+        const results: Type_User[] = await this.connectionData()
+            .into(UserDatabase.TABLE_NANE_FRIEND)
+            .select("*")
+            .where({follower_id: id})
+            .orWhere({followed_id: id})
+
+            return results.length ? results[0] : null
+    }
+
     async followAnUser(follow: string, followBack: string): Promise<void> {
         try{
             await this.connectionData()
@@ -65,6 +75,33 @@ export class UserDatabase extends BaseDatabase implements Inter_UserRepository {
             await this.connectionData()
                 .into(UserDatabase.TABLE_NANE_FRIEND)
                 .where({follower_id: unfollow, followed_id: unfollowBack})
+                .del()
+        } catch (error: any) {
+            throw new Error(error.sqlMessage)
+        }
+    }
+
+    async destroyFriendshipById(id: string): Promise<void>{
+        try{
+            await this.connectionData()
+            .into(UserDatabase.TABLE_NANE_FRIEND)
+            .where({follower_id: id})
+            .del()
+            
+            await this.connectionData()
+            .into(UserDatabase.TABLE_NANE_FRIEND)
+            .where({followed_id: id})
+            .del()
+        } catch (error: any) {
+            throw new Error(error.sqlMessage)
+        }
+    }
+
+    async deleteUserByToken(id: string): Promise<void> {
+        try{
+            await this.connectionData()
+                .into(UserDatabase.TABLE_NAME)
+                .where({id: id})
                 .del()
         } catch (error: any) {
             throw new Error(error.sqlMessage)
