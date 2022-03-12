@@ -2,7 +2,7 @@ import { Inter_UserRepository } from "../../Interface/interface_UserRepository"
 import { autheticationData } from "../../Models/authenticationData"
 import { Type_User } from "../../Models/type_user"
 import { HashManager } from "../../Services/hashManager"
-import { inputUserLoginDTO, inputUserSignupDTO } from "../../Types/inputUserDTO"
+import { getUserNoPasswordDTO, inputUserLoginDTO, inputUserSignupDTO } from "../../Types/inputUserDTO"
 import { IdMaker } from "../../Utilities/idMaker"
 import { TokenMaker } from "../../Utilities/tokenMaker"
 
@@ -23,8 +23,8 @@ export class UserSettings {
     signup = async (input: inputUserSignupDTO):Promise<any> => {
         const {name, email, password} = input
 
-        let message  = "Account created with success"
-        let statusCode = 201
+        let message: string  = "Account created with success"
+        let statusCode: number = 201
 
             if (!name || !email || !password) {
                 statusCode = 406
@@ -59,8 +59,8 @@ export class UserSettings {
     login = async (input: inputUserLoginDTO):Promise<any> => {
         const { email, password } = input
 
-        let message  = 'Account logged with success'
-        let statusCode = 200
+        let message: string  = 'Account logged with success'
+        let statusCode: number = 200
 
         if (!email || !password) {
             statusCode = 406
@@ -90,8 +90,8 @@ export class UserSettings {
 
     getAllUsers = async (token: string): Promise<any> => {
 
-        let message = 'This is all users.'
-        let statusCode = 200
+        let message: string = 'This is all users.'
+        let statusCode: number = 200
 
         if(!token){
             statusCode = 406
@@ -106,19 +106,52 @@ export class UserSettings {
             throw new Error(message)
         }
 
-        const userData = await this.userDatabase.getAllUsers()
+        const userData: getUserNoPasswordDTO = await this.userDatabase.getAllUsers()
 
         if(!userData){
             message = 'Cannot has anything this time.'
         }
 
         return {statusCode, message, userData}
+    } 
+
+    getUserById = async (id: string, token: string):Promise<any> => {
+        let message: string  = `This is the user for id ${id}`
+        let statusCode: number = 200
+
+        if(!id){
+            statusCode = 406
+            message = 'Please informes an id in path params.'
+            throw new Error(message)
+        }
+
+        if(!token){
+            statusCode = 406
+            message = 'The headers token is not informed.'
+            throw new Error(message)
+        }
+
+        const userData: Type_User = await this.userDatabase.findById(id)
+
+        if(!userData){
+            statusCode = 404
+            message = 'Invalid id, user not found'
+            throw new Error (message)
+        }
+
+        const user: getUserNoPasswordDTO = {
+            id: userData.id,
+            name: userData.name,
+            email: userData.email,
+        }
+
+        return {user, statusCode, message}
     }
 
     followAnUser = async (id: string, token: string) => {
 
-        let message  = 'Following is completed'
-        let statusCode = 200
+        let message: string = 'Following is completed'
+        let statusCode: number = 200
             
         if(!id){
             statusCode = 406
@@ -139,7 +172,7 @@ export class UserSettings {
             throw new Error(message)
         }
 
-        const idVerify = await this.userDatabase.findById(id)
+        const idVerify: Type_User = await this.userDatabase.findById(id)
 
         if(!idVerify){
             message = 'Invalid id, user not found.'
@@ -169,8 +202,8 @@ export class UserSettings {
     }
 
     unfollowerUser = async (id: string, token: string) => {
-        let message  = 'Unfollowing is completed'
-        let statusCode = 200
+        let message: string  = 'Unfollowing is completed'
+        let statusCode: number = 200
 
         if(!id){
             statusCode = 406
@@ -191,7 +224,7 @@ export class UserSettings {
             throw new Error(message)
         }
 
-        const idVerify = await this.userDatabase.findById(id)
+        const idVerify: Type_User = await this.userDatabase.findById(id)
 
         if(!idVerify){
             message = 'Invalid id, user not found.'
@@ -203,13 +236,12 @@ export class UserSettings {
             throw new Error(message)
         }
         
-        const userData = await this.userDatabase.findFriendshipById(tokenVerify.id, id)
+        const userData: Type_User = await this.userDatabase.findFriendshipById(tokenVerify.id, id)
 
 
         if(userData){
             await this.userDatabase.unfollowAnUser(tokenVerify.id, id)
             await this.userDatabase.unfollowAnUser(id, tokenVerify.id)
-            console.log(userData)
         } else{
             message = 'You not follow this user.'
             throw new Error(message)

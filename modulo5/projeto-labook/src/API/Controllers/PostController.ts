@@ -11,7 +11,7 @@ export class PostController {
     }
 
     createNewPost = async (req: Request, resp: Response):Promise<any> => {
-        const { description, url_photo, category } = req.body
+        const { description, url_photo, category }: inputPostCreateDTO = req.body
 
         const token: string = req.headers.authorization as string
 
@@ -22,7 +22,7 @@ export class PostController {
         }
 
         try{
-            const post = await this.postSettings.createNewPost(inputCreatePost, token)
+            const post: any = await this.postSettings.createNewPost(inputCreatePost, token)
 
             resp.status(post.statusCode).send({message: post.message, post: post.postBase})
         } catch (error: any){
@@ -36,7 +36,7 @@ export class PostController {
         const token: string = req.headers.authorization as string
 
         try{
-            const post = await this.postSettings.getAllPosts(token)
+            const post: any = await this.postSettings.getAllPosts(token)
 
             resp.status(post.statusCode).send({message: post.message, results: post.postData})
         } catch (error: any){
@@ -52,7 +52,7 @@ export class PostController {
         const token: string = req.headers.authorization as string
 
         try{
-            const post = await this.postSettings.getPostById(id, token)
+            const post: any = await this.postSettings.getPostById(id, token)
 
             resp.status(post.statusCode).send({post: post.post})
         } catch (error: any){
@@ -68,7 +68,7 @@ export class PostController {
         const token: string = req.headers.authorization as string
 
         try{
-            const post = await this.postSettings.deletePostById(id, token)
+            const post: any = await this.postSettings.deletePostById(id, token)
 
             resp.status(post.statusCode).send({message: post.message})
         } catch (error: any){
@@ -84,7 +84,7 @@ export class PostController {
         const token: string = req.headers.authorization as string
 
         try{
-            const post = await this.postSettings.changePostPhotoById(id, token, url_photo)
+            const post: any = await this.postSettings.changePostPhotoById(id, token, url_photo)
 
             resp.status(200).send({message: post.message, changedTo: post.postData}) 
         } catch (error: any){

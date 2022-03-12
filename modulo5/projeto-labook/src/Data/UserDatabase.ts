@@ -14,7 +14,7 @@ export class UserDatabase extends BaseDatabase implements Inter_UserRepository {
     }
 
     async getAllUsers (): Promise<any> {
-        const results = await this.connectionData()
+        const results: Type_User[] = await this.connectionData()
             .into(UserDatabase.TABLE_NAME)
             .select("*")
 
@@ -42,7 +42,7 @@ export class UserDatabase extends BaseDatabase implements Inter_UserRepository {
     }
 
     async findFriendshipById (followerId: string, followedId:string): Promise<any> {
-        const results: any[] = await this.connectionData()
+        const results: Type_User[] = await this.connectionData()
             .into(UserDatabase.TABLE_NANE_FRIEND)
             .select("*")
             .where({follower_id: followerId, followed_id: followedId})

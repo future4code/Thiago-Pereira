@@ -21,10 +21,10 @@ export class PostSetting {
     createNewPost = async (input: inputPostCreateDTO, token: string):Promise<any> => {
         const {description, url_photo, category} = input
 
-        const categoryWorked = category.toLocaleLowerCase()
+        const categoryWorked: string = category.toLocaleLowerCase()
 
-        let message  = 'Post is created'
-        let statusCode = 201
+        let message: string  = 'Post is created'
+        let statusCode: number = 201
 
         if(!description || !url_photo || !categoryWorked) {
             statusCode = 406
@@ -53,7 +53,7 @@ export class PostSetting {
 
         const id = this.idMaker.generate()
 
-        const creationDate = new Date().toISOString().split("T")[0]
+        const creationDate: string = new Date().toISOString().split("T")[0]
 
         const postBase: Type_Post = {
             id: id,
@@ -70,8 +70,8 @@ export class PostSetting {
 
     getAllPosts = async (token: string): Promise<any> => {
 
-        let message = 'This is all posts.'
-        let statusCode = 200
+        let message: string = 'This is all posts.'
+        let statusCode: number = 200
 
         if(!token){
             statusCode = 406
@@ -86,7 +86,7 @@ export class PostSetting {
             throw new Error(message)
         }
 
-        const postData = await this.postDatabase.getAllPosts()
+        const postData: Type_Post = await this.postDatabase.getAllPosts()
 
         if(!postData){
             message = 'Cannot has anything this time.'
@@ -99,8 +99,8 @@ export class PostSetting {
 
 
     getPostById = async (id: string, token: string):Promise<any> => {
-        let message  = 'Post is created'
-        let statusCode = 200
+        let message: string  = `This is the post for id ${id}`
+        let statusCode: number = 200
 
         if(!id){
             statusCode = 406
@@ -133,12 +133,12 @@ export class PostSetting {
             created_at: reloadedData,
             creator_id: postData.creator_id
         }
-        return {post, statusCode}
+        return {post, statusCode, message}
     }
 
     deletePostById = async (id: string | any, token: string):Promise<any> => {
-        let message  = 'Post is deleted'
-        let statusCode = 201
+        let message: string  = 'Post is deleted'
+        let statusCode: number = 201
 
         if(!id){
             statusCode = 406
@@ -152,14 +152,35 @@ export class PostSetting {
             throw new Error(message)
         }
 
+        const postData: Type_Post = await this.postDatabase.findById(id)
+
+        if(!postData){
+            statusCode = 404
+            message = 'Invalid id, post not found'
+            throw new Error (message)
+        }
+
+        const tokenVerify: autheticationData = this.tokenMaker.verify(token)
+        
+        if(!tokenVerify){
+            message = 'This token is invalid'
+            throw new Error(message)
+        }
+
+        if(postData.creator_id !== tokenVerify.id){
+            statusCode = 422
+            message = 'You cannot is the owner of the this Post, for can delete her.'
+            throw new Error(message)
+        }
+
         await this.postDatabase.deletePostById(id)
 
         return {message, statusCode}
     }
 
     changePostPhotoById = async (id: string | any, token: string, url_photo: string):Promise<any> => {
-        let message  = 'Post photo url is changed'
-        let statusCode = 200
+        let message: string  = 'Post photo url is changed'
+        let statusCode: number = 200
 
         if(!id){
             statusCode = 406
@@ -185,8 +206,8 @@ export class PostSetting {
     }
 
     changePostDescriptionById = async (id: string | any, token: string, description: string):Promise<any> => {
-        let message  = 'Post description is changed'
-        let statusCode = 200
+        let message: string  = 'Post description is changed'
+        let statusCode: number = 200
 
         if(!id){
             statusCode = 406

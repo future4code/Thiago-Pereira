@@ -13,7 +13,7 @@ export class PostDatabase extends BaseDatabase implements Inter_PostRepository{
     }
 
     async getAllPosts (): Promise<any> {
-        const results = await this.connectionData()
+        const results: Type_Post[] = await this.connectionData()
             .into(PostDatabase.TABLE_NAME)
             .select("*")
 
@@ -30,7 +30,7 @@ export class PostDatabase extends BaseDatabase implements Inter_PostRepository{
     }
 
     async findById(id: string): Promise<Type_Post | null> {
-        const results: any = await this.connectionData()
+        const results: Type_Post[] = await this.connectionData()
             .into(PostDatabase.TABLE_NAME)
             .select("*")
             .where({ id: id })
@@ -51,7 +51,7 @@ export class PostDatabase extends BaseDatabase implements Inter_PostRepository{
             .where({id: id})
             .update({url_photo: changes})
 
-        const results = await this.connectionData()
+        const results: Type_Post[] = await this.connectionData()
             .into(PostDatabase.TABLE_NAME)
             .select("*")
             .where({id: id})
@@ -74,7 +74,7 @@ export class PostDatabase extends BaseDatabase implements Inter_PostRepository{
             .where({id: id})
             .update({description: changes})
 
-            const results = await this.connectionData()
+            const results: Type_Post[] = await this.connectionData()
             .into(PostDatabase.TABLE_NAME)
             .select("*")
             .where({id: id})

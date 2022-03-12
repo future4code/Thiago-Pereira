@@ -9,6 +9,12 @@ export type inputUserLoginDTO = {
     password: string
 }
 
+export type getUserNoPasswordDTO = {
+    id: string
+    name: string,
+    email: string,
+}
+
 export type paramsUserFollow = {
     id: string
 }
