@@ -13,7 +13,6 @@ export const Router = () => {
     return(
         <BrowserRouter>
             <CompHeader />
-            <CompMenu />
             <Switch>
                 <Route exact path="/">
                     <PageHome />
